@@ -54,6 +54,7 @@ let tempo = document.createElement('input');
 tempo.type="number";
 tempo.value = bpm;
 tempo.className = "tempo-box";
+tempo.inputmode="numeric";
 tempo.addEventListener('change', () => {
   console.log("new tempo: " + tempo.value);
   bpm = tempo.value;
@@ -98,20 +99,20 @@ function startClick(){
 }
 
 // Adjust metronome sync
-// speed up/slow down metronome by 5% to get in phase with external clicks
+// speed up/slow down metronome by as much as 10% to get in phase with external clicks
 let tempoSync = document.createElement('input');
 tempoSync.type = 'range';
-tempoSync.min = -5.0;
-tempoSync.max = 5.0;
+tempoSync.min = -10.0;
+tempoSync.max = 10.0;
 tempoSync.step = 0.1;
 tempoSync.id = "tempoSync";
 tempoSync.value = 0;
 
 tempoSync.addEventListener('input', function() {
-  // adjust tempo +/- 5%
+  // adjust tempo +/- 10%
   //console.log(this.value * 0.01 + 1);
   Tone.Transport.bpm.value = bpm * (this.value * 0.01 + 1);
-  console.log(Tone.Transport.bpm.value);
+//  console.log(Tone.Transport.bpm.value);
   tempo.value = Tone.Transport.bpm.value;
 }, false);
 
@@ -123,10 +124,10 @@ tempoSync.addEventListener('change', function() {
 
 }, false);
 
+// add metronome elements to the <div>
 m.appendChild(transport);
 m.appendChild(tempoLabel);
 m.appendChild(tempo);
 m.appendChild(click);
-let br = document.createElement("br")
-m.appendChild(br);
+m.appendChild(document.createElement("br"));
 m.appendChild(tempoSync);

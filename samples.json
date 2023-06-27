@@ -1,0 +1,14 @@
+{
+  "samples" :
+  [
+    {
+      "name" : "fear",
+      "file" : "FDR_fear_itself.mp3",
+      "bpm" : 120
+    },
+    {
+      "name" : "the only thing",
+      "file" : "FDR_the_only_thing.mp3"
+    }
+  ]
+}

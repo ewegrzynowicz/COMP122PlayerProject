@@ -23,41 +23,52 @@
     <button id="aboutButton" class='menu' style="width: 80%;">About this project ...</button>
     <div id="about" class='contents' style="display: none; text-align: left;">
       <!-- Edit content in "about.md" -->
-      <zero-md src="about.md"></zero-md>
+      <zero-md src="about/about.md"></zero-md>
     </div>
   </div>
 
-  <button id="part1" class='menu'>Part 1 - Samples</button>
+  <button id="part1" class='menu'>1. Samples</button>
   <div id="part1contents" class='contents' style="display: none;">
-    <p>Part 1 Contents</p>
+    <p>Part 1 - Sampler</p>
+    <div id="sampler"></div>
     <button id="part1instructionsButton" class='menu' style="width: 80%;">Part 1 Instructions</button>
     <div id="part1instructions" class='contents' class='contents' style="display: none; text-align: left;">
       <!-- Edit content in "about.md" -->
-      <zero-md src="part1.md"></zero-md>
+      <zero-md src="about/part1.md"></zero-md>
     </div>
   </div>
 
-  <button id='part2' class='menu'>Part 2</button>
+  <button id='part2' class='menu'>2. Synthesis</button>
   <div class='contents' style="display: none;">
-    <p>Part 2</p>
+    <p>Part 2 - Synthesis</p>
     <button id="part2instructionsButton" class='menu' style="width: 80%;">Part 2 Instructions</button>
     <div class="contents" style="display: none;">
-      <p>Part 2 Instructions</p>
+      <zero-md src="about/part2.md"></zero-md>
     </div>
   </div>
 
-  <button id='part3' class='menu'>Part 3</button>
+  <button id='part3' class='menu'>3. Beats & Sequences</button>
   <div class='contents' style="display: none;">
-    <p>Part 3</p>
+    <p>Part 3 - Beats and Sequences</p>
     <button id="part3instructionsButton" class='menu' style="width: 80%;">Part 3 Instructions</button>
     <div class="contents" style="display: none;">
-      <p>Part 2 Instructions</p>
+      <zero-md src="about/part3.md"></zero-md>
+    </div>
+  </div>
+
+  <button id='part4' class='menu'>4. Music Generator</button>
+  <div class='contents' style="display: none;">
+    <p>Part 4 - Music Generator</p>
+    <button id="part4instructionsButton" class='menu' style="width: 80%;">Part 4 Instructions</button>
+    <div class="contents" style="display: none;">
+      <zero-md src="about/part4.md"></zero-md>
     </div>
   </div>
 
 
   <script src="pageLayout.js"></script>
   <script src="metronome.js"></script>
+  <script src="samples.js" type="module"></script>
 
 </body>
 
