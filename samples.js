@@ -17,8 +17,9 @@ async function loadJSONData() {
   }
   //console.log(JSON.stringify(data));
 }
-
-// start by cycling through the array of sample objects, making buttons
+/** 
+  loadSample() takes the object read in from "samples.json" and creates an array of sample controls (play, reverse, etc)
+*/
 function loadSamples(obj){
   if(obj.hasOwnProperty("samples") && Array.isArray(obj.samples)){
     //console.log("obj.samples is an array");
@@ -36,20 +37,24 @@ function makeButton(sObj, i){
   //play button
   let b = document.createElement("button");
   b.id = "sample_" + i;
-  b.className = "samplerButton";
+  b.className = "play-button";
   b.innerHTML = sObj.name;
   let d = document.getElementById("sampler");
-  let player = new Tone.Player("/samples/" + sObj.file).toDestination();
+  let player = new Tone.Player(sObj.file).toDestination();
   b.addEventListener('click', () =>{
     if(sObj.hasOwnProperty("bpm")){
       // scale playback rate to tempo
       player.playbackRate = Tone.Transport.bpm.value / sObj.bpm;
+    }
+    if(Tone.Transport.state == "stopped"){
+      startTransport();
     }
     player.start(); // play the sample
   });
   // reverse button
   let rev = document.createElement("button");
   rev.innerHTML = "REV";
+  rev.className = "metro-button";
   rev.addEventListener('click', () => {
     if(player.reverse){
       player.reverse = false;
@@ -59,8 +64,9 @@ function makeButton(sObj, i){
       rev.innerHTML = "FWD";
     }
   });
-  d.appendChild(b); // add buttons to sampler div
-  d.appendChild(rev);
+  d.appendChild(b); // add play button to sampler div
+  d.appendChild(rev);  // add reverse button
+  d.appendChild(document.createElement("br"));
 }
 
 let promise = loadJSONData();
