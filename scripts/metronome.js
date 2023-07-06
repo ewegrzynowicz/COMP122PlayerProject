@@ -11,6 +11,22 @@ Tone.Transport.bpm.value = bpm;
 
 // default click tone for metronome
 const metroClick = new Tone.Synth().toDestination();
+const drums = new Tone.Sampler(
+  {
+    urls: {
+      "A3": "drums/Kick.wav",
+      "A#3": "drums/Kick.wav",
+      "B3": "drums/Snare.wav",
+      "C4": "drums/Claps.wav",
+      "C#4": "drums/Shot1.wav",
+      "D#4": "drums/Shot2.wav",
+      "D4": "drums/WhiteNoise.wav",
+      "E4": "drums/ReverseCymbal.wav",
+      "F4": "drums/HiHat_Closed.wav",
+      "F#4": "drums/HiHat_Open.wav"
+    },
+  }
+).toDestination();
 
 var metro = "off"; // metronome state
 
@@ -73,7 +89,8 @@ click.addEventListener('click', () => {
 const clickLoop = new Tone.Loop((time) => {
 	// triggered every eighth note.
 	console.log(time);
-  metroClick.triggerAttackRelease(500, "128n", time);
+  drums.triggerAttackRelease("F4", "8n", time);
+  //metroClick.triggerAttackRelease(500, "128n", time);
 }, "4n");
 
 function startClick(){
@@ -85,7 +102,7 @@ function startClick(){
       if(Tone.Transport.state == "stopped"){
         startTransport();
       }
-      clickLoop.start("+4n");
+      clickLoop.start("4n+");
       break;
     case "on":
       metro = "off";

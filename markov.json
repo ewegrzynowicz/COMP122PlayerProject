@@ -1,0 +1,40 @@
+[
+  {
+    "name" : "template",
+    "pitchSet" : {
+    "state" : "C4",
+    "matrix" : {
+      "C4" : ["C4"]
+      }
+    },
+    "rhythmSet" : {
+      "state" : "4n",
+      "staccato" : "true",
+      "matrix" : {
+        "4n" : ["4n"]
+      }
+    }
+  },
+  {
+    "name" : "twinkle",
+    "pitchSet" : {
+    "state" : "C4",
+    "matrix" : {
+      "C4" : ["C4", "G4"],
+      "G4" : ["G4", "A4", "F4"],
+      "A4" : ["A4", "G4"],
+      "F4" : ["F4", "E4"],
+      "E4" : ["E4", "D4"],
+      "D4" : ["D4", "C4"]
+      }
+    },
+    "rhythmSet" : {
+      "state" : "8n",
+      "staccato": " true",
+      "matrix" : {
+        "8n" : ["8n", "8n", "8n", "2n"],
+        "2n" : ["8n"]
+      }
+    }
+  }
+]

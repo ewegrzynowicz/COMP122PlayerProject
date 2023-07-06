@@ -4,8 +4,8 @@
 */
 
 // read in the JSON file with sampler meta-data
-async function loadJSONData() {
-  const response = await fetch("samples.json");
+async function loadSamplerData(file) {
+  const response = await fetch(file);
   const text = await response.text(); 
   try {
     let obj = JSON.parse(text); // if JSON is valid, make an object
@@ -69,7 +69,7 @@ function makeButton(sObj, i){
   d.appendChild(document.createElement("br"));
 }
 
-let promise = loadJSONData();
+let promise = loadSamplerData("samples.json");
 
 //console.log("global data: " + data)
 
