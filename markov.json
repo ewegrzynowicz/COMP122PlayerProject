@@ -1,17 +1,21 @@
 [
   {
-    "name" : "template",
+    "name" : "bass",
     "pitchSet" : {
-    "state" : "C4",
+    "state" : "C3",
     "matrix" : {
-      "C4" : ["C4"]
+      "C3" : ["C3", "G3", "B2"],
+      "G3" : ["C3", "G3", "B2"],
+      "B2" : ["C3"]
       }
     },
     "rhythmSet" : {
       "state" : "4n",
       "staccato" : "true",
       "matrix" : {
-        "4n" : ["4n"]
+        "4n" : ["4n", "16n"],
+        "16n" : ["4n", "16n", "8n"],
+        "8n" : ["4n", "16n", "8n"]
       }
     }
   },

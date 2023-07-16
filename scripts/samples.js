@@ -3,16 +3,27 @@
 * June 26, 2023
 */
 
+let promise = loadSamplerData("samples.json");
 // read in the JSON file with sampler meta-data
 async function loadSamplerData(file) {
   const response = await fetch(file);
+  console.log("OK?: " + response.ok);
+  if(!response.ok) {
+    let e = "Error: file not found (samples.json)"
+    document.getElementById("sampler").innerHTML = e;
+    console.log(e);
+    return;
+  }
   const text = await response.text(); 
   try {
     let obj = JSON.parse(text); // if JSON is valid, make an object
     loadSamples(obj); // load samples into the player
     return obj;
-  } catch (error){
-    console.log("error - invalid JSON file (samples.json)");
+  } 
+  catch (error){
+    let e = "error - invalid JSON file (samples.json)<br /> copy and paste your JSON to <a href = 'https://jsonlint.com/' target='_blank'>jsonlint.com</a>";
+    document.getElementById("sampler").innerHTML = e;
+    console.log(e);
     return;
   }
   //console.log(JSON.stringify(data));
@@ -69,7 +80,6 @@ function makeButton(sObj, i){
   d.appendChild(document.createElement("br"));
 }
 
-let promise = loadSamplerData("samples.json");
 
 //console.log("global data: " + data)
 

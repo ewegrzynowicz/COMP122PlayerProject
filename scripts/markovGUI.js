@@ -7,44 +7,65 @@ const s = p => {
   var nButtons = new Array();
   var pitchSet = null, rhythmSet = null; // needs setter
   var loop = null;
+  var name = "foo";
+  var vol = 1;
+  var slider;
 
   p.setLoop = function(obj){
     loop = obj; // reference to a Tone.loop 
+    // called from markov.js after Tone.loop object is created
+  }
+
+  p.getVol = function(){
+    return vol; // get the current volume for this graph
+  }
+
+  p.setVol = function(){
+    // set volume
+    //vol = slider.
   }
   
   p.setObj = function(obj){
     if(obj.hasOwnProperty("pitchSet")){
       pitchSet = obj.pitchSet;
+      p.makeNodes(pitchSet);
     }
     if(obj.hasOwnProperty("rhythmSet")){
       rhythmSet = obj.rhythmSet;
     }
+    if(obj.hasOwnProperty("name")){
+      name = obj.name;
+    }
   }
+  
+  p.makeNodes = function(pitchSet){
+    nodes = Object.keys(pitchSet.matrix); // array of nodes
+    //console.log("nodes" + nodes);
+    let slice = p.TWO_PI; // distribute nodes around a circle
+    if (nodes.length > 0) {
+      slice = p.TWO_PI / nodes.length; // divide the circle by number of nodes
+    }
+    for (let i = 0; i < nodes.length; i++) {
+      let x = (p.cos(slice * i) * 150) + (p.width / 2); // find a location
+      let y = (p.sin(slice * i) * 150) + (p.height / 2);
 
+      nButtons[i] = new Button(p, x, y, p.color(p.random(250), p.random(250), p.random(250)), nodes[i]);
+      nButtons[i].w = 40; // node button size
+      nButtons[i].pitch = nodes[i]; // assign a pitch property
+
+    }
+    
+  }
+  
   p.setup = function() {
     p.createCanvas(400, 400);
-    tButton = new Button(p, p.width / 2, p.height / 2, p.color(0, 200, 0), "start");
-    if(pitchSet){
-      nodes = Object.keys(pitchSet.matrix); // array of nodes
-      //console.log("nodes" + nodes);
-      let slice = p.TWO_PI; // distribute nodes around a circle
-      if (nodes.length > 0) {
-        slice = p.TWO_PI / nodes.length; // divide the circle by number of nodes
-      }
-      for (let i = 0; i < nodes.length; i++) {
-        let x = p.cos(slice * i) * 150 + (p.width / 2); // find a location
-        let y = p.sin(slice * i) * 150 + (p.height / 2);
-
-        nButtons[i] = new Button(p, x, y, p.color(p.random(250), p.random(250), p.random(250)), nodes[i]);
-        nButtons[i].w = 40; // node button size
-        nButtons[i].pitch = nodes[i]; // assign a pitch property
-      }
-    }
+    tButton = new Button(p, p.width / 2, p.height / 2, p.color(0, 200, 0), "start \n" + name);
+    slider = new Slider(p, p.width/2, p.height * 11/12)
   }
 
   p.draw = function() {
     p.background(200);
-
+    tButton.message = name;
     tButton.display(); // transport button
 
     p.drawConnections(); // arrows
@@ -52,8 +73,18 @@ const s = p => {
     for (let i = 0; i < nButtons.length; i++) {
       nButtons[i].display(); // node buttons
     }
+    slider.display();
+    //let x = (p.cos(0) * 150) + (p.width / 2); // find a location
+    //let y = (p.sin(0) * 150) + (p.height / 2);   
+    //p.ellipse(x, y, 10)
+    if(p.mouseIsPressed){
+      if(p.mouseX < slider.x + 50 && p.mouseX > slider.x - 50 && p.mouseY > slider.y - 20 && p.mouseY < slider.y + 20){
+        slider.move(p.mouseX - slider.x);
+        vol = slider.val;
+      }
+    }
   }
-
+  
 // draw a transparent line between nodes with a connection
   p.drawConnections = function() {
     p.stroke(255, 0, 0, 30);
@@ -77,7 +108,7 @@ const s = p => {
         //use drawArrow() from p5.org lerp() reference
         let v1 = p.createVector(x, y);
         let v2 = p.createVector(x2, y2);
-        let v3 = p.p5.Vector.lerp(v1, v2, 0.7);
+        let v3 = p5.Vector.lerp(v1, v2, 0.7);
         p.drawArrow(v1, v3, p.color(255, 0, 0, 30));
     }
   }
@@ -118,11 +149,11 @@ const s = p => {
     {
       if (loop && loop.state == "stopped") {
         loop.start();
-        tButton.col = color(0, 255, 0);
+        tButton.col = p.color(0, 255, 0);
       } 
       else if (loop && loop.state == "started") {
         loop.stop();
-        tButton.col = color(0, 200, 0);
+        tButton.col = p.color(0, 200, 0);
       }
     }
   }
@@ -145,11 +176,42 @@ class Button {
     this.p.stroke(0);
     let c = this.col;
     if (this.playing) {
-      fill(red(this.col) * 2, green(this.col) * 2, blue(this.col) * 2)
-    } else fill(this.col);
+      this.p.fill(this.p.red(this.col) * 2, this.p.green(this.col) * 2, this.p.blue(this.col) * 2)
+    } else this.p.fill(this.col);
     this.p.ellipse(this.x, this.y, this.w);
     this.p.textAlign(this.p.CENTER);
     this.p.fill(255);
     this.p.text(this.message, this.x, this.y)
+  }
+}
+
+class Slider {
+  constructor(_p, X, Y){
+    this.p = _p;
+    this.x = X;
+    this.y = Y;
+    this.val = 1; // slider value
+    this.pos = 50;
+  }
+
+  display() {
+    this.p.push();
+    this.p.translate(this.x, this.y);
+    this.p.strokeWeight(5);
+    this.p.line(-50, 0, 50, 0);
+    this.p.strokeWeight(1);
+    this.p.fill(255);
+    this.p.textAlign(this.p.CENTER);
+    this.p.text("volume", 0, 15);
+    this.p.fill('#4caf50'); //fader color
+    this.p.rectMode(this.p.CENTER);
+    //this.pos = this.p.map(this.val, 0, 1, -50, 50)
+    this.p.rect(this.pos, 0, 10, 40);
+    this.p.pop();
+  }
+
+  move(_pos){
+    this.pos = _pos;
+    this.val = this.p.map(this.pos, -50, 50, 0, 1);
   }
 }

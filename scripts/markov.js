@@ -12,8 +12,11 @@ async function loadMarkovData(file) {
     let obj = JSON.parse(text); // if JSON is valid, make an object
     makeGraph(obj); // generate Markov player and GUI
     return obj;
-  } catch (error){
-    console.log("error - invalid JSON file (markov.json)");
+  } 
+  catch (error){
+    let e = "error - invalid JSON file (markov.json)<br /> copy and paste your JSON to <a href = 'https://jsonlint.com/' target='_blank'>jsonlint.com</a>";
+    document.getElementById("markov").innerHTML = e;
+    console.log(e);
     return;
   }
   //console.log(JSON.stringify(data));
@@ -28,14 +31,15 @@ function makeGraph(obj){
       console.log(obj[i].name);
       let m = document.getElementById("markov");
       let sketch = new p5(s, m); // invoke p5
+      //console.log ("sketch width: " + sketch.width);
       sketch.setObj(obj[i]); // pass an object to a sketch
       let pitchSet = {};
       let rhythmSet = {};
       if(obj[i].hasOwnProperty("pitchSet") && obj[i].hasOwnProperty("rhythmSet")){
         pitchSet = obj[i].pitchSet;
-        console.log("pitchSet set!");
+        //console.log("pitchSet set!");
         rhythmSet = obj[i].rhythmSet;
-        console.log("rhythmSet set!");
+        //console.log("rhythmSet set!");
       }
       const loop = new Tone.Loop(time => {
   //in this loop, the markov() function will choose the next pitch  and rhythmic value based on the matrix defined in your pitchSet and rhythmSet objects
@@ -45,7 +49,8 @@ function makeGraph(obj){
       if(staccato){
         dur = "16n";
       } else dur = r;
-      synth.triggerAttackRelease(p, dur, time);
+      let v = sketch.getVol();
+      synth.triggerAttackRelease(p, dur, time, v);
       Tone.Transport.schedule
       loop.interval = r; // set the interval to a new value
       sketch.onButton(p);
@@ -59,8 +64,30 @@ function makeGraph(obj){
   }  
 }
 
+const staccato = false; // play all notes short? or not?
+
+
+//the markov() function chooses a new value from the ".graph" object based on the current value of the ".next" property of a given graph object
+function markov(obj){
+  //console.log(obj.state); // show the next value in the console
+  let values = Object.keys(obj.matrix); // get a list of possible values in the matrix
+  let i = values.indexOf(obj.state); // find the position current state in the matrix list
+  
+  let possibilities = obj.matrix[values[i]]; // get all the possible next values for a given state as an array
+
+  obj.state = possibilities[Math.floor(Math.random() * possibilities.length)];
+  // choose a value at random from the list & assign it as the next ".state"
+
+  return obj.state; // return the value chosen
+}
+
+// Create an nistrument to play the Markov-generated tune
+const synth = new Tone.PolySynth(Tone.Synth).toDestination();
+
+
 /** Markov Generator GUI (P5 Instance)
 */
+/*
 const s = p => {
   var tButton, s1Button, s2Button, nodes, beatButton;
   var nButtons = new Array();
@@ -213,26 +240,4 @@ class Button {
     this.p.text(this.message, this.x, this.y)
   }
 }
-
-
-const staccato = false; // play all notes short? or not?
-
-
-//the markov() function chooses a new value from the ".graph" object based on the current value of the ".next" property of a given graph object
-function markov(obj){
-  //console.log(obj.state); // show the next value in the console
-  let values = Object.keys(obj.matrix); // get a list of possible values in the matrix
-  let i = values.indexOf(obj.state); // find the position current state in the matrix list
-  
-  let possibilities = obj.matrix[values[i]]; // get all the possible next values for a given state as an array
-
-  obj.state = possibilities[Math.floor(Math.random() * possibilities.length)];
-  // choose a value at random from the list & assign it as the next ".state"
-
-  return obj.state; // return the value chosen
-}
-
-// Create an nistrument to play the Markov-generated tune
-const synth = new Tone.PolySynth(Tone.Synth).toDestination();
-
-
+*/
