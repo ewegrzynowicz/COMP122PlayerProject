@@ -5,7 +5,7 @@ Students will add their own content to the four sections of this project (sample
 
 ## Project 1 - Sampler
 
-Students will locate and edit short soundfile samples to be triggerd at will within the project interface. Each sample will be described within a JSON file with a prescribed structure.
+Students will locate and edit short soundfile samples (using online tools such as AudioMass) to be triggerd at will within the project interface. Each sample will be described within a JSON file with a prescribed structure. Sample properties may include tempo and pitch information (for time scaling and transposition), as well as offsets and loop points. The sampler player will read the student-provided JSON file and create Tone.player instruments with a graphical user interface, provided the sample files listed in the JSON file are uploaded into the project directory as well.
 
 For example:
 ```json
@@ -26,7 +26,11 @@ For example:
 ```
 
 ## Project 2 - Synthesizer
+Students will create a series of Synthesizer preset modules described in a JSON document.
+
 ## Project 3 - Sequencer & Beat Generator
+Students will describe a set of short musical seequences (chord progressions and/or melodies) and a set of rhythmic patterns (individual parts of a drum pattern).
+
 ## Project 4 - Algorithmic Music Generator
 Create a JSON describing Markov probability tables for both rhythm and pitch. The graph may be derived from an existing tune or may be entirely invented by the student. It is possible to create multiple Markov generators and to play them simultaneously (in time with the central Transport clock).
 

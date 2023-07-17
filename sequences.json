@@ -1,0 +1,30 @@
+[
+  {
+    "name": "sequence 1",
+    "octave": 0,
+    "duration": "1:0:0",
+    "sequence": [
+      { "time": "0:0:0", "pitch": "C4", "dur": "8n" },
+      { "time": "0:0:2", "pitch": "C4", "dur": "8n" },
+      { "time": "0:1:0", "pitch": "G4", "dur": "8n" },
+      { "time": "0:1:2", "pitch": "G4", "dur": "8n" },
+      { "time": "0:2:0", "pitch": "A4", "dur": "8n" },
+      { "time": "0:2:2", "pitch": "A4", "dur": "8n" },
+      { "time": "0:3:0", "pitch": "G4", "dur": "4n" }
+    ]
+  },
+  {
+    "name": "sequence 2",
+    "octave": 0,
+    "duration": "1:0:0",
+    "sequence": [
+      { "time": "0:0:0", "pitch": "F4", "dur": "8n" },
+      { "time": "0:0:2", "pitch": "F4", "dur": "8n" },
+      { "time": "0:1:0", "pitch": "E4", "dur": "8n" },
+      { "time": "0:1:2", "pitch": "E4", "dur": "8n" },
+      { "time": "0:2:0", "pitch": "D4", "dur": "8n" },
+      { "time": "0:2:2", "pitch": "D4", "dur": "8n" },
+      { "time": "0:3:0", "pitch": "C4", "dur": "4n" }
+    ]
+  }
+]

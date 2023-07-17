@@ -1,0 +1,12 @@
+[
+  {
+    "name" : "megasynth",
+    "type" : "AMSynth",
+    "settings" : {}
+  },
+  {
+    "name" : "FM Aliens",
+    "type" : "FMSynth",
+    "settings" : {}
+  }
+]

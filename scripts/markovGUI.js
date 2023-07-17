@@ -2,7 +2,7 @@
 * P5.js functions for GUI
 * Creates a user interface with a graphical representation of the Markov graph and connections between nodes
 */
-const s = p => {
+const mGUI = p => {
   var tButton, s1Button, s2Button, nodes, beatButton;
   var nButtons = new Array();
   var pitchSet = null, rhythmSet = null; // needs setter
