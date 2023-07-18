@@ -84,7 +84,12 @@ class PlayButton {
     this.p.translate(this.x, this.y);
     this.p.fill(this.col);
     this.p.stroke(255);
-    this.p.triangle(this.w/2, 0, -this.w/2, -this.w/2, -this.w/2, this.w/2);
+    if(this.playing){
+      this.p.rectMode(this.p.CENTER);
+      this.p.rect(-this.w/4, 0, this.w/4, 40);     
+      this.p.rect(this.w/4, 0, this.w/4, 40);    
+    } else
+      this.p.triangle(this.w/2, 0, -this.w/2, -this.w/2, -this.w/2, this.w/2);
     this.p.pop();
   }
 }

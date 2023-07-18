@@ -19,5 +19,19 @@ async function loadBeatData(file) {
 }
 
 function makeBeats(obj){
-  document.getElementById("beats").innerHTML = JSON.stringify(obj);
+  //master control section
+  let beatsDiv = document.getElementById("beats");
+  let bSketch = new p5(beatsGUI, beatsDiv);
+  let beats = [];
+
+  //individual parts
+  if(Array.isArray(obj)){
+    for(let i = 0; i < obj.length; i++){
+      console.log(obj[i].name);
+      let beatPartDiv = document.getElementById("beatParts");
+      let pSketch = new p5(beatPartGUI, beatPartDiv); // invoke p5 and add it to the div
+      pSketch.setObj(obj[i]); // hand a refernce to the sequence to the sketch
+    } 
+  }  
+
 }

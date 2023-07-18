@@ -80,6 +80,3 @@ function markov(obj){
 
   return obj.state; // return the value chosen
 }
-
-// Create an nistrument to play the Markov-generated tune
-const synth = new Tone.PolySynth(Tone.Synth).toDestination();

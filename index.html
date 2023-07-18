@@ -51,7 +51,8 @@
   <button id='part3' class='menu'>3. Beats & Sequences</button>
   <div class='contents' style="display: none;">
     <p>Part 3 - Beats and Sequences</p>
-    <div id="beats"></div>
+    <div id="beats" style="position: relative;"></div>
+    <div id="beatParts" style="display: none;"></div>
     <div id="sequences"></div>
     <button id="part3instructionsButton" class='menu' style="width: 80%;">Part 3 Instructions</button>
     <div class="contents" style="display: none;">
@@ -71,10 +72,12 @@
 
 
   <script src="scripts/pageLayout.js"></script>
+  <script src="scripts/instruments.js"></script>
   <script src="scripts/drums.js"></script>
   <script src="scripts/metronome.js"></script>
   <script src="scripts/samples.js" type="module"></script>
   <script src="scripts/beats.js"></script>
+  <script src="scripts/beatGUI.js"></script>
   <script src="scripts/sequences.js"></script>
   <script src="scripts/sequenceGUI.js"></script>
   <script src="scripts/markov.js"></script>

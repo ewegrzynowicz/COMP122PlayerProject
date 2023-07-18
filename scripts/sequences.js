@@ -29,30 +29,9 @@ function makeSeqPlayer(obj){
       console.log(obj[i].name);
       let seqDiv = document.getElementById("sequences");
       let sketch = new p5(seqGUI, seqDiv); // invoke p5 and add it to the div
-      sketch.setObj(obj[i]);
-     // const loop = new Tone.Loop(time => {
-  //in this loop, the markov() function will choose the next pitch  and rhythmic value based on the matrix defined in your pitchSet and rhythmSet objects
-      //let r = markov(rhythmSet); // get the next duration value
-      //let p = markov(pitchSet); // get the next pitch value
-     // let dur;
-      //if(staccato){
-        //dur = "16n";
-      //} else dur = r;
-      //let v = sketch.getVol();
-      //synth.triggerAttackRelease(p, dur, time, v);
-      //Tone.Transport.schedule
-      //loop.interval = r; // set the interval to a new value
-      //sketch.onButton(p);
-      //let offTime = "+" + (0.9 * Tone.Time(r).toSeconds());
-     // Tone.Transport.schedule((time) => {sketch.offButton(p)}, offTime);
-  
-    //}, rhythmSet.state);
-      //loop.state = "stopped";
-      //sketch.setLoop(loop); //hand reference to the loop to P5 sketch    
+      sketch.setObj(obj[i]); // hand a refernce to the sequence to the sketch
     } 
   }  
-  
-  
 }
 
 function playSequence(seq) {

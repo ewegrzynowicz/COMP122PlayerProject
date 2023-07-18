@@ -2,16 +2,19 @@
   {
     "name" : "kick",
     "pitch" : "A3",
-    "pattern" : "1000"
+    "pattern" : "1000",
+    "synth" : "mySampler"
   },
   {
     "name" : "claps",
-    "pitch" : "G4",
-    "pattern" : "00001000"
+    "pitch" : "C4",
+    "pattern" : "0000100000001000",
+    "synth" : "mySampler"
   },
   {
     "name" : "hi-hat",
-    "pitch" : "A4",
-    "pattern" : "00010101110111010100110110010"
+    "pitch" : "F4",
+    "pattern" : "00010101110111010100110110010",
+    "synth" : "mySampler"
   }
 ]
