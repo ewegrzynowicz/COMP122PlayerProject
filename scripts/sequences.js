@@ -50,7 +50,7 @@ function makeSeqPlayer(obj){
   }  
 }
 
-function playSequence(seq) {
+function playSequence(seq, instrument) {
   //console.log(seq);
   if(Tone.Transport.state == "stopped") {
     console.log("start transport first");
@@ -62,7 +62,7 @@ function playSequence(seq) {
   const part = new Tone.Part(((time, note) => {
     // the notes given as the second element in the array
     // will be passed in as the second argument 
-    synth.triggerAttackRelease(Tone.Frequency(note.pitch).transpose(seq.octave * 12), note.dur, time);
+    instrument.triggerAttackRelease(Tone.Frequency(note.pitch).transpose(seq.octave * 12), note.dur, time);
     console.log(note.pitch);
   }), seq.sequence).start(t);
   part.loopEnd = seq.duration;

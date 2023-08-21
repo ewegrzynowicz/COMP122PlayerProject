@@ -3,6 +3,7 @@ const seqGUI = p => {
   var playButton, playTimer, upOctave, downOctave; // buttons
   var part; //Tone.js Part reference
   var selectSynth; // dropdown menu for synth selector?
+  var instrument; // synth to use for this sequence
 
   p.setObj = function(_obj){
     obj = _obj;
@@ -20,9 +21,20 @@ const seqGUI = p => {
     //cnv.position();
     //selectSynth.parent(cnv.parent());
     selectSynth.position(10, 30);
-    selectSynth.option('Default Synth', 0);
-    selectSynth.option('Default Drums', 1);   
+  //  selectSynth.option('Default Synth', 0);
+  //  selectSynth.option('Default Drums', 1);   
     // dynamically add synth options based on global synth list
+    for(let i = 0; i < synthLibrary.length; i ++){
+      selectSynth.option(synthLibrary[i].name, i);
+    }
+    selectSynth.changed(p.chooseSynth);
+    instrument = synthLibrary[0].synth;
+  }
+  
+  p.chooseSynth = function(){
+    instrument = synthLibrary[selectSynth.value()].synth;
+    console.log(selectSynth.value());
+    
   }
 
   p.draw = function(){
@@ -72,7 +84,7 @@ const seqGUI = p => {
     if(p.dist(p.mouseX, p.mouseY, playButton.x, playButton.y) < playButton.w/2){
       if(obj.hasOwnProperty("sequence")){
         //console.log("play" + obj.sequence);
-        part = playSequence(obj);
+        part = playSequence(obj, instrument);
         Tone.Transport.schedule((time) => {
 	       // invoked on next measure
           playTimer.start(part.loopEnd); // loopEnd is the duration of the sequence
