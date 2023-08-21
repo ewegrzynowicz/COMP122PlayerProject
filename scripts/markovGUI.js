@@ -148,7 +148,16 @@ const mGUI = p => {
     if (p.dist(p.mouseX, p.mouseY, tButton.x, tButton.y) < tButton.w / 2) 
     {
       if (loop && loop.state == "stopped") {
-        loop.start();
+        let t = Tone.Transport.position;
+        let times = t.split(':');
+        times[2] = 0; // set to downbeat;
+        times[1] = Number(times[1]) + 1; // move up to the next downbeat;
+        if (times[1] > 3) {
+          times[1] = 0;
+          times[0] = Number(times[0]) + 1;
+        }
+        t = times[0] + ":" + times[1] + ":" + times[2];
+        loop.start(t); // start on next downbeat
         tButton.col = p.color(0, 255, 0);
       } 
       else if (loop && loop.state == "started") {

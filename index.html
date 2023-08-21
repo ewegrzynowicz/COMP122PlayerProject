@@ -39,7 +39,7 @@
   </div>
 
   <button id='part2' class='menu'>2. Synthesis</button>
-  <div class='contents' style="display: none;">
+  <div id ='synth-contents' class='contents' style="display: none;">
     <p>Part 2 - Synthesis</p>
     <div id="synths"></div>
     <button id="part2instructionsButton" class='menu' style="width: 80%;">Part 2 Instructions</button>
@@ -49,11 +49,11 @@
   </div>
 
   <button id='part3' class='menu'>3. Beats & Sequences</button>
-  <div class='contents' style="display: none;">
+  <div id='part3-contents' class='contents' style="display: none;">
     <p>Part 3 - Beats and Sequences</p>
     <div id="beats" style="position: relative;"></div>
     <div id="beatParts" style="display: none;"></div>
-    <div id="sequences"></div>
+    <div id="sequences" class="sequences"></div>
     <button id="part3instructionsButton" class='menu' style="width: 80%;">Part 3 Instructions</button>
     <div class="contents" style="display: none;">
       <zero-md src="about/part3.md"></zero-md>
@@ -70,9 +70,9 @@
     </div>
   </div>
 
-
   <script src="scripts/pageLayout.js"></script>
-  <script src="scripts/instruments.js"></script>
+  <script src="scripts/keyboard.js"></script>
+  <script src="scripts/synths.js"></script>
   <script src="scripts/drums.js"></script>
   <script src="scripts/metronome.js"></script>
   <script src="scripts/samples.js" type="module"></script>

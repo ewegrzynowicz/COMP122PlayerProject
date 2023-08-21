@@ -28,7 +28,23 @@ function makeSeqPlayer(obj){
     for(let i = 0; i < obj.length; i++){
       console.log(obj[i].name);
       let seqDiv = document.getElementById("sequences");
-      let sketch = new p5(seqGUI, seqDiv); // invoke p5 and add it to the div
+      let d = document.createElement('div');
+      d.className = "seqPlayer";
+      seqDiv.appendChild(d);
+//      let p = document.createElement('div'); // player container
+//      d.appendChild(p); // add player to parent div
+      let sketch = new p5(seqGUI, d); // invoke p5 and add it to the div
+//      let sketch = new p5(seqGUI, seqDiv); // invoke p5 and add it to the div
+/*      let sel = document.createElement('select'); // menu
+      let option = document.createElement('option');
+      option.value = 0;
+      option.text = "Default Synth";
+      sel.appendChild(option); // add option to menu
+      let s = document.createElement('div'); //container for the menu
+      s.className = "synthSel"
+      s.appendChild(sel); // add the menu to the div
+      d.appendChild(s); // add the div to the player parent div
+*/      
       sketch.setObj(obj[i]); // hand a refernce to the sequence to the sketch
     } 
   }  
@@ -40,17 +56,9 @@ function playSequence(seq) {
     console.log("start transport first");
     return; // put up an error message and quit the function
   }
-  let t = Tone.Transport.position;
-
-  let times = t.split(':');
-  times[2] = 0; // set to downbeat;
-  times[1] = Number(times[1]) + 1; // move up to the next downbeat;
-  if (times[1] > 3) {
-    times[1] = 0;
-    times[0] = Number(times[0]) + 1;
-  }
-  t = times[0] + ":" + times[1] + ":" + times[2];
-  
+  let t;
+  //t = nextbeat(); //start on next downbeat
+  t = nextMeasure(); // start on next measure
   const part = new Tone.Part(((time, note) => {
     // the notes given as the second element in the array
     // will be passed in as the second argument 
@@ -62,6 +70,31 @@ function playSequence(seq) {
   return part;
   
 }
+function nextBeat(){
+  let t = Tone.Transport.position;
+
+  let times = t.split(':');
+  times[2] = 0; // set to downbeat;
+  times[1] = Number(times[1]) + 1; // move up to the next downbeat;
+  if (times[1] > 3) {
+    times[1] = 0;
+    times[0] = Number(times[0]) + 1;
+  }
+  t = times[0] + ":" + times[1] + ":" + times[2];
+  return t;
+  
+}
+
+function nextMeasure (){
+  let t = Tone.Transport.position;
+  let times = t.split(':');
+  times[2] = 0; // set to downbeat;
+  times[1] = 0; // set to first beat
+  times[0] = Number(times[0]) + 1; // move up to the next measure;
+  t = times[0] + ":" + times[1] + ":" + times[2];    
+  return t
+}
+
 
 /**  
   // make buttons for each sequence in the array "sequences"

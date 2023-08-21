@@ -22,7 +22,7 @@ function makeBeats(obj){
   //master control section
   let beatsDiv = document.getElementById("beats");
   let bSketch = new p5(beatsGUI, beatsDiv);
-  let beats = [];
+  let beatSketches = [];
 
   //individual parts
   if(Array.isArray(obj)){
@@ -30,8 +30,12 @@ function makeBeats(obj){
       console.log(obj[i].name);
       let beatPartDiv = document.getElementById("beatParts");
       let pSketch = new p5(beatPartGUI, beatPartDiv); // invoke p5 and add it to the div
-      pSketch.setObj(obj[i]); // hand a refernce to the sequence to the sketch
+      let loop = pSketch.setObj(obj[i]); // hand a reference to the sequence to the sketch, get a Tone.loop in return
+      loop.stop();
+      beatSketches.push(pSketch); // add the loop sketch to the beats array
     } 
   }  
+
+  bSketch.setLoops(beatSketches); // hand the array of beats to the big button
 
 }

@@ -2,17 +2,27 @@ const seqGUI = p => {
   var obj;
   var playButton, playTimer, upOctave, downOctave; // buttons
   var part; //Tone.js Part reference
+  var selectSynth; // dropdown menu for synth selector?
 
   p.setObj = function(_obj){
     obj = _obj;
   }
   
   p.setup = function(){
-    p.createCanvas(400, 60);
+    let cnv = p.createCanvas(350, 70);
+    //cnv.position(0, 0, 'absolute');
     playButton = new PlayButton(p, p.width/2, p.height/2);
     playTimer = new PlayTimer(p, p.width/2, p.height/2);
     upOctave = new OctaveButton(p, p.width * 9/12, p.height/2, "up");
     downOctave = new OctaveButton(p, p.width * 11/12, p.height/2, "down");
+    selectSynth = p.createSelect();
+    selectSynth.class("synthMenu");
+    //cnv.position();
+    //selectSynth.parent(cnv.parent());
+    selectSynth.position(10, 30);
+    selectSynth.option('Default Synth', 0);
+    selectSynth.option('Default Drums', 1);   
+    // dynamically add synth options based on global synth list
   }
 
   p.draw = function(){
@@ -20,8 +30,8 @@ const seqGUI = p => {
     //p.rect(10, 5, 380, 40);
     if(obj.hasOwnProperty("name")){
       p.textAlign(p.LEFT, p.TOP);
-      p.textSize(18);
-      p.text(obj.name, 10, 10);
+      p.textSize(14);
+      p.text(obj.name, 10, 5);
     }
     playTimer.display();
     playTimer.isFinished();
@@ -47,15 +57,26 @@ const seqGUI = p => {
     }
   }
 
+  p.nextMeasure = function(){
+    let t = Tone.Transport.position;
+    let times = t.split(':');
+    times[2] = 0; // set to downbeat;
+    times[1] = 0; // set to first beat
+    times[0] = Number(times[0]) + 1; // move up to the next measure;
+    t = times[0] + ":" + times[1] + ":" + times[2];    
+    return t
+  }
+
+
   p.mousePressed = function(){
     if(p.dist(p.mouseX, p.mouseY, playButton.x, playButton.y) < playButton.w/2){
       if(obj.hasOwnProperty("sequence")){
         //console.log("play" + obj.sequence);
         part = playSequence(obj);
         Tone.Transport.schedule((time) => {
-	       // invoked on next beat
+	       // invoked on next measure
           playTimer.start(part.loopEnd); // loopEnd is the duration of the sequence
-        }, "+4n");
+        }, p.nextMeasure());
 
       }
     }
@@ -68,7 +89,23 @@ const seqGUI = p => {
     }
   }
 }
+/*
+class SynthSelect {
+  constructor(_p, _x, _x, _a){
+    this.p = _p; // P5 context object reference
+    this.x = _x;
+    this.y = _y;
+    this.a = _a; // array of choices
+    this.w = 100;
+    this.col = this.p.color("#4caf50"); // green
+    this.val = 0; //intial selection
+  }
 
+  display(){
+    
+  }
+}
+*/
 class PlayButton {
   constructor(_p, _x, _y){
     this.p = _p; // P5 object reference

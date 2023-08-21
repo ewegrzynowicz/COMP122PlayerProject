@@ -46,12 +46,12 @@ function makeGraph(obj){
       let r = markov(rhythmSet); // get the next duration value
       let p = markov(pitchSet); // get the next pitch value
       let dur;
-      if(staccato){
+      if(obj[i].staccato){
         dur = "16n";
       } else dur = r;
       let v = sketch.getVol();
       synth.triggerAttackRelease(p, dur, time, v);
-      Tone.Transport.schedule
+      //Tone.Transport.schedule
       loop.interval = r; // set the interval to a new value
       sketch.onButton(p);
       let offTime = "+" + (0.9 * Tone.Time(r).toSeconds());

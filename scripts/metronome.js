@@ -10,8 +10,8 @@ console.log("default tempo: " + bpm + " bpm");
 Tone.Transport.bpm.value = bpm;
 
 // default click tone for metronome
-const metroClick = new Tone.Synth().toDestination();
-const drums = new Tone.Sampler(
+//const metroClick = new Tone.Synth().toDestination();
+const clickSampler = new Tone.Sampler(
   {
     urls: {
       "A3": "drums/Kick.wav",
@@ -87,11 +87,18 @@ click.addEventListener('click', () => {
 });
 
 const clickLoop = new Tone.Loop((time) => {
-	// triggered every eighth note.
-	console.log(time);
-  drums.triggerAttackRelease("F4", "8n", time);
+	// triggered every quarter note.
+	//console.log(time);
+  clickSampler.triggerAttackRelease("F4", "8n", time);
   //metroClick.triggerAttackRelease(500, "128n", time);
 }, "4n");
+
+const dbClickLoop = new Tone.Loop((time) => {
+	// triggered every measure.
+	//console.log(time);
+  clickSampler.triggerAttackRelease("A3", "8n", time);
+  //metroClick.triggerAttackRelease(500, "128n", time);
+}, "1m");
 
 function startClick(){
     switch(metro){
@@ -102,17 +109,52 @@ function startClick(){
       if(Tone.Transport.state == "stopped"){
         startTransport();
       }
-      clickLoop.start("4n+");
+/*      let t = Tone.Transport.position;    
+      let times = t.split(':');
+      times[2] = 0; // set to downbeat;
+      times[1] = Number(times[1]) + 1; // move up to the next downbeat;
+      if (times[1] > 3) {
+        times[1] = 0;
+        times[0] = Number(times[0]) + 1;
+      }
+      t = times[0] + ":" + times[1] + ":" + times[2];
+*/
+      clickLoop.start(getNextbeat()); // start on next quarter note
+      dbClickLoop.start(getNextMeasure());
       break;
     case "on":
       metro = "off";
       console.log("click " + metro);
       click.style.background = '#a8a8a8';
       clickLoop.stop();
+      dbClickLoop.stop();
       break;
     default:
       Tone.Transport.start();
   }
+}
+
+function getNextbeat(){
+  let t = Tone.Transport.position;    
+  let times = t.split(':');
+  times[2] = 0; // set to downbeat;
+  times[1] = Number(times[1]) + 1; // move up to the next downbeat;
+  if (times[1] > 3) {
+    times[1] = 0;
+    times[0] = Number(times[0]) + 1;
+  }
+  t = times[0] + ":" + times[1] + ":" + times[2];
+  return t;
+}
+
+function getNextMeasure(){
+  let t = Tone.Transport.position;    
+  let times = t.split(':');
+  times[2] = 0; // set to downbeat;
+  times[1] = 0; // set to beginning of measure
+  times[0] = Number(times[0]) + 1; // move up to the next measure;
+  t = times[0] + ":" + times[1] + ":" + times[2];
+  return t;
 }
 
 // Adjust metronome sync

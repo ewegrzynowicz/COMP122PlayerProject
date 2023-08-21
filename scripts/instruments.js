@@ -1,7 +1,7 @@
 // Create a default instrument (sequences and markov)
 const synth = new Tone.PolySynth(Tone.Synth).toDestination();
 
-/**Define a polyphonic synthesizer */
+/**Define a polyphonic sampler */
 const drumSampler = new Tone.Sampler(
   {
     urls : {
@@ -16,7 +16,6 @@ const drumSampler = new Tone.Sampler(
       "F4" : "drums/HiHat_Closed.wav",
       "F#4" : "drums/drums/HiHat_Open.wav"
     },
-    //baseUrl : "https://replit.com/@dbwetzel/COMP122PlayerProject#drums"
   }
 ).toDestination(); 
 
