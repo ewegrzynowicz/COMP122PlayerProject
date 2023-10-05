@@ -13,7 +13,7 @@ var synthLibrary = [
     polyphonic: true
   },
   {
-    name: "FM Synth Test",
+    name: "Default FM Synth",
     type: "FMSynth",
     settings: {},
     polyphonic: true
@@ -59,13 +59,13 @@ async function loadSynthData(file) {
 
 function makeSynthPlayer(obj) {
   console.log("Synth player:");
-  document.getElementById("synths").innerHTML = JSON.stringify(obj);
-//  console.log(obj);
-  //synthLibrary.push(defaultSynth);
+  console.log(JSON.stringify(obj));
+
+    // start with the default synths ...
   for(let i = 0; i < synthLibrary.length; i ++){
     makeSynths(synthLibrary[i]); // generate Tone synths for each entry
   }
-  
+  //now add user items from the JSON file ...
   if(Array.isArray(obj)){
     for(let i = 0; i < obj.length; i ++){
       makeSynths(obj[i]); //parse the objects, instantiate synths
@@ -74,8 +74,12 @@ function makeSynthPlayer(obj) {
   }
   console.log("Synth Library: " + synthLibrary.length + " items")
 
+  // set up the Keyboard GUI
   let s = document.getElementById("synths");
-  let sketch = new p5(keyGUI, s); // invoke p5 and add it to the div
+  let k = document.createElement('div');
+  k.className = "seqPlayer";
+  s.appendChild(k);
+  let sketch = new p5(keyGUI, k); // invoke p5 and add it to the div
 }
 
 function makeSynths(obj){

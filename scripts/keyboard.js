@@ -2,8 +2,11 @@
  * This UI script uses P5.js to create an animated and interactive keyboard. 
  * It works in conjunction with the script "synth.js" that contains the noteOn() and noteOff() function definitions as well as definitions for synths using Tone.js
  *  - DB Wetzel, Feb. 2022
+ * updated October 2023 for COMP/MUSC 122
  */
 const keyGUI = p => {
+  var selectSynth;
+  var instrument;
   var keyboard = []; // an array of keys
   var whiteKeys = [0, 2, 4, 5, 7, 9, 11];
   var size = 16; // how many keys?
@@ -31,7 +34,24 @@ const keyGUI = p => {
         keypos++;
       }
     }
+    selectSynth = p.createSelect();
+    selectSynth.class("synthMenu"); // create menu
+    selectSynth.position(10, 30); // place menu
+    for(let i = 0; i < synthLibrary.length; i ++){
+      // add synth pre-set titles to menu
+      selectSynth.option(synthLibrary[i].name, i);
+    }
+    selectSynth.changed(p.chooseSynth);
+    instrument = synthLibrary[0].synth; // set default
+
   }
+  p.chooseSynth = function(){
+    for(let i = 0; i < keyboard.length; i++){         
+      keyboard[i].instrument = synthLibrary[selectSynth.value()].synth;
+ }   console.log(selectSynth.value());
+    
+  }
+
 
 //P5 event handler looks for key presses
   p.keyPressed = function() {
@@ -70,7 +90,7 @@ const keyGUI = p => {
     }
   }
 };
-/** Constructor function for individual keys un keyboard UI */
+/** Constructor function for individual keys on keyboard UI */
 class Key {
   constructor(_p, X, Y, QWERTY, note, isWhiteKey){
     this.p = _p; //P5 instance
@@ -86,7 +106,8 @@ class Key {
     this.octave = Math.trunc(note / 12) - 1;
     this.noteName = this.letter + this.octave.toString();
     this.pressed = false;
-    this.size = 30;  
+    this.size = 30; 
+    this.instrument = new Tone.PolySynth(Tone.Synth).toDestination();
   }
 
   mousePressed(_x, _y, on) { // receives mouse coordinates + boolean "on"
@@ -103,13 +124,15 @@ class Key {
   press() {
     //console.log([this.noteName, 127]);
     this.pressed = true;
-    synth.triggerAttack(this.noteName, Tone.now());
+    //synth.triggerAttack(this.noteName, Tone.now());
+    this.instrument.triggerAttack(this.noteName, Tone.now());
   }
 
   release() {
     //console.log([this.noteName, 0]);
     this.pressed = false;
-    synth.triggerRelease(this.noteName, Tone.now());
+    //synth.triggerRelease(this.noteName, Tone.now());
+    this.instrument.triggerRelease(this.noteName, Tone.now());
   }
   displayW() {
     //display white keys

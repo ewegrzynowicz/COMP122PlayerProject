@@ -1,14 +1,33 @@
-{
-  "samples" :
-  [
+
+[
+  {
+    "name" : "fear",
+    "file" : "samples/FDR_fear_itself.mp3",
+    "bpm" : 120,
+    "duration" : "4m"
+  },
+  {
+    "name" : "the only thing",
+    "file" : "samples/FDR_the_only_thing.mp3",
+    "bpm" : 120
+  },
+  {
+    "name" : "Camden Rain Piano (ST)",
+    "file" : "samples/Camden_Rain_piano.wav",
+    "bpm" : 120,
+    "duration" : "8:0:0"
+  },
+  {
+    "name" : "Atlantis-Dancing Synth Bass (ST)",
+    "file": "samples/Atlantis-Dancing_Synth_Bass-ST.wav",
+    "bpm" : 120,
+    "duration" : "8:0:0"
+  },
     {
-      "name" : "fear",
-      "file" : "samples/FDR_fear_itself.mp3",
-      "bpm" : 120
-    },
-    {
-      "name" : "the only thing",
-      "file" : "samples/FDR_the_only_thing.mp3"
-    }
-  ]
-}
+    "name" : "Beat-Sir 2 (ST)",
+    "file": "samples/Beat-Sir_2-ST.wav",
+    "bpm" : 120,
+    "duration" : "2:0:0"
+  }
+
+]

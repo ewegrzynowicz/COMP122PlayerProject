@@ -7,7 +7,7 @@
 
 .synthMenu {
   height: 30px;
-  width: 120px;
+  width: auto;
   background-color: #c9fbbc;
   text-align: center;
 }

@@ -9,28 +9,106 @@ Students will locate and edit short soundfile samples (using online tools such a
 
 For example:
 ```json
-{
-  "samples" :
-  [
-    {
-      "name" : "fear",
-      "file" : "samples/FDR_fear_itself.mp3",
-      "bpm" : 120
-    },
-    {
-      "name" : "the only thing",
-      "file" : "samples/FDR_the_only_thing.mp3"
-    }
-  ]
-}
+[
+  {
+    "name" : "fear",
+    "file" : "samples/FDR_fear_itself.mp3",
+    "bpm" : 120,
+    "duration" : "4m"
+  },
+  {
+    "name" : "the only thing",
+    "file" : "samples/FDR_the_only_thing.mp3",
+    "bpm" : 120
+  },
+  {
+    "name" : "Camden Rain Piano (ST)",
+    "file" : "samples/Camden_Rain_piano.wav",
+    "bpm" : 120,
+    "duration" : "8m"
+  }
+]
 ```
 
 ## Project 2 - Synthesizer
-Students will create a series of Synthesizer preset modules described in a JSON document.
+Students will create a series of Synthesizer preset modules described in a JSON document. These synthesizers are realized using the Tone.js library (based on the Web Audio API) and will be limited to several basic synthesizer types. Students will create one or more presets sounds that will be available to each of the subsequent modules that rely on synthesizer playback (sequences and generative music system).
+
+for example:
+```json
+[
+  {
+    "name" : "megasynth",
+    "type" : "AMSynth",
+    "settings" : {}
+  },
+  {
+    "name" : "FM Aliens",
+    "type" : "FMSynth",
+    "settings" : {}
+  }
+]
+```
 
 ## Project 3 - Sequencer & Beat Generator
-Students will describe a set of short musical seequences (chord progressions and/or melodies) and a set of rhythmic patterns (individual parts of a drum pattern).
+Students will describe a set of short musical seequences (chord progressions and/or melodies) and a set of rhythmic patterns (individual parts of a drum pattern). These patterns may be orginal compositions or transcribed from other sources into JSON.
 
+For example, a set of sequences:
+```json
+[
+  {
+    "name": "sequence 1",
+    "octave": 0,
+    "duration": "1:0:0",
+    "sequence": [
+      { "time": "0:0:0", "pitch": "C4", "dur": "8n" },
+      { "time": "0:0:2", "pitch": "C4", "dur": "8n" },
+      { "time": "0:1:0", "pitch": "G4", "dur": "8n" },
+      { "time": "0:1:2", "pitch": "G4", "dur": "8n" },
+      { "time": "0:2:0", "pitch": "A4", "dur": "8n" },
+      { "time": "0:2:2", "pitch": "A4", "dur": "8n" },
+      { "time": "0:3:0", "pitch": "G4", "dur": "4n" }
+    ]
+  },
+  {
+    "name": "sequence 2",
+    "octave": 0,
+    "duration": "1:0:0",
+    "sequence": [
+      { "time": "0:0:0", "pitch": "F4", "dur": "8n" },
+      { "time": "0:0:2", "pitch": "F4", "dur": "8n" },
+      { "time": "0:1:0", "pitch": "E4", "dur": "8n" },
+      { "time": "0:1:2", "pitch": "E4", "dur": "8n" },
+      { "time": "0:2:0", "pitch": "D4", "dur": "8n" },
+      { "time": "0:2:2", "pitch": "D4", "dur": "8n" },
+      { "time": "0:3:0", "pitch": "C4", "dur": "4n" }
+    ]
+  }
+]
+
+```
+and a set of beat patterns:
+```json
+[
+  {
+    "name" : "kick",
+    "pitch" : "A3",
+    "pattern" : "1000",
+    "synth" : "mySampler"
+  },
+  {
+    "name" : "claps",
+    "pitch" : "C4",
+    "pattern" : "0000100000001000",
+    "synth" : "mySampler"
+  },
+  {
+    "name" : "hi-hat",
+    "pitch" : "F4",
+    "pattern" : "00010101110111010100110110010",
+    "synth" : "mySampler"
+  }
+]
+```
 ## Project 4 - Algorithmic Music Generator
 Create a JSON describing Markov probability tables for both rhythm and pitch. The graph may be derived from an existing tune or may be entirely invented by the student. It is possible to create multiple Markov generators and to play them simultaneously (in time with the central Transport clock).
 

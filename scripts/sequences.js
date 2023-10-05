@@ -1,4 +1,4 @@
-/** 
+/**
 * Make a sequence player interface with Tone.js and P5.js
 * July 16, 2023
 */
