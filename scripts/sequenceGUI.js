@@ -17,7 +17,7 @@ const seqGUI = p => {
     upOctave = new OctaveButton(p, p.width * 9/12, p.height/2, "up");
     downOctave = new OctaveButton(p, p.width * 11/12, p.height/2, "down");
     selectSynth = p.createSelect();
-    selectSynth.class("synthMenu");
+    selectSynth.class("synthSequenceMenu");
     //cnv.position();
     //selectSynth.parent(cnv.parent());
     selectSynth.position(10, 30);

@@ -1,4 +1,6 @@
+var beatLoops = [];
 let beatPromise = loadBeatData("beats.json");
+
 
 // read in the JSON file with sampler meta-data
 async function loadBeatData(file) {
@@ -31,6 +33,7 @@ function makeBeats(obj){
       let beatPartDiv = document.getElementById("beatParts");
       let pSketch = new p5(beatPartGUI, beatPartDiv); // invoke p5 and add it to the div
       let loop = pSketch.setObj(obj[i]); // hand a reference to the sequence to the sketch, get a Tone.loop in return
+      beatLoops.push(loop); // add loop to global array
       loop.stop();
       beatSketches.push(pSketch); // add the loop sketch to the beats array
     } 

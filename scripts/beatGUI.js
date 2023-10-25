@@ -9,6 +9,7 @@ const beatPartGUI = p => {
   var mute = false; // mute the pattern
   var margin = 50; // left padding
   var pitch = "C3"; // default pitch
+  var div = document.getElementById("beatParts");
 
   p.setObj = function(_obj) {
     obj = _obj;
@@ -100,7 +101,7 @@ const beatPartGUI = p => {
   }
 
   p.mousePressed = function() {
-    if (p.mouseY < p.height && p.mouseY > 0) {
+    if (p.mouseY < p.height && p.mouseY > 0 && div.style["display"] == "block") {
       if (loop.state == 'started') {
         loop.stop();
         cellCount = 0; // reset counter

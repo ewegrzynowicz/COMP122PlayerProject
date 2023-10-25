@@ -5,6 +5,13 @@
   width: 350px;
 }
 
+.synthSequenceMenu {
+  height: 30px;
+  width: 100px;
+  background-color: #c9fbbc;
+  text-align: center;
+}
+
 .synthMenu {
   height: 30px;
   width: auto;
