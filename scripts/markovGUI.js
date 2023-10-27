@@ -10,6 +10,7 @@ const mGUI = p => {
   var name = "foo";
   var vol = 1;
   var slider;
+  var div = document.getElementById("markov").parentNode;
 
   p.setLoop = function(obj){
     loop = obj; // reference to a Tone.loop 
@@ -145,7 +146,7 @@ const mGUI = p => {
   }
 
   p.mousePressed = function() {
-    if (p.dist(p.mouseX, p.mouseY, tButton.x, tButton.y) < tButton.w / 2) 
+    if (p.dist(p.mouseX, p.mouseY, tButton.x, tButton.y) < tButton.w / 2 && div.style["display"] == "block") 
     {
       if (loop && loop.state == "stopped") {
         let t = Tone.Transport.position;
