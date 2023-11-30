@@ -12,13 +12,21 @@ const mGUI = p => {
   var slider;
   var instrument; //= synthLibrary[0].synth;
   var selectSynth;
+  var selectLength;
+  var noteLength = "legato";
   var div = document.getElementById("markov").parentNode;
 
   p.setLoop = function(obj){
     loop = obj; // reference to a Tone.loop 
     // called from markov.js after Tone.loop object is created
   }
-
+  p.getLength = function(){
+    return noteLength; // "legato", "marcato", "staccato"
+    //if staccato, play all notes as 16ths
+    //legato is full note value
+    //marcato is shortened by 80%
+  }
+  
   p.getVol = function(){
     return vol; // get the current volume for this graph
   }
@@ -57,11 +65,23 @@ const mGUI = p => {
     }
     selectSynth.changed(p.chooseSynth);
 
+    selectLength = p.createSelect();
+    selectLength.class("synthSequenceMenu");
+    selectLength.position(p.width * .7, 10);
+    selectLength.option("legato");
+    selectLength.option("marcato");
+    selectLength.option("staccato");
+    selectLength.changed(p.chooseLength);
+
   }
 
   p.chooseSynth = function(){
     instrument = synthLibrary[selectSynth.value()].synth;
-    console.log(instrument);
+//    console.log(instrument);
+  }
+  p.chooseLength = function(){
+    noteLength = selectLength.selected();
+//    console.log(noteLength);
   }
 
   p.makeNodes = function(pitchSet, w, h){

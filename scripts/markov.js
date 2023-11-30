@@ -42,22 +42,35 @@ function makeGraph(obj) {
       let staccato = false;
       if (obj[i].hasOwnProperty("pitchSet") && obj[i].hasOwnProperty("rhythmSet")) {
         pitchSet = obj[i].pitchSet;
-        //console.log("pitchSet set!");
         rhythmSet = obj[i].rhythmSet;
-        //console.log("rhythmSet set!");
+
         if (obj[i].rhythmSet.hasOwnProperty("staccato")){
           staccato = obj[i].rhythmSet.staccato; // true or false
-          console.log("markov staccato: " + staccato);
+//          console.log("markov staccato: " + staccato);
         }
       }
       const loop = new Tone.Loop(time => {
         //in this loop, the markov() function will choose the next pitch  and rhythmic value based on the matrix defined in your pitchSet and rhythmSet objects
         let r = markov(rhythmSet); // get the next duration value
         let p = markov(pitchSet); // get the next pitch value
+        
         let dur = r;
-        if (staccato == "true") {
-          dur = "16n";
-        } 
+//        if (staccato == "true") {
+//          dur = "16n";
+//        }
+        switch(sketch.getLength()){
+          case "legato":
+            dur = r;
+            break;
+          case "staccato":
+            dur = "16n";
+            break;
+          case "marcato":
+            dur = Tone.Time(r).toSeconds() * .7;
+            break;
+          default:
+            dur = r;
+        }
         let v = sketch.getVol();
         let instr = sketch.getInst();
         instr.triggerAttackRelease(p, dur, time, v);
