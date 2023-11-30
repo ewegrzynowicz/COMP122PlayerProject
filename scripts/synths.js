@@ -59,7 +59,7 @@ async function loadSynthData(file) {
 
 function makeSynthPlayer(obj) {
   console.log("Synth player:");
-  console.log(JSON.stringify(obj));
+  //console.log(JSON.stringify(obj));
 
     // start with the default synths ...
   for(let i = 0; i < synthLibrary.length; i ++){

@@ -58,7 +58,7 @@ function startTransport(){
       transport.innerHTML = "Start";
       break;
     default:
-      Tone.Transport.start();
+      Tone  .Transport.start();
   }
 }
 

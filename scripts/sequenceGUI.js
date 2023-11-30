@@ -4,6 +4,7 @@ const seqGUI = p => {
   var part; //Tone.js Part reference
   var selectSynth; // dropdown menu for synth selector?
   var instrument; // synth to use for this sequence
+  var div = document.getElementById("part3-contents");
 
   p.setObj = function(_obj){
     obj = _obj;
@@ -33,7 +34,7 @@ const seqGUI = p => {
   
   p.chooseSynth = function(){
     instrument = synthLibrary[selectSynth.value()].synth;
-    console.log(selectSynth.value());
+    //console.log(selectSynth.value());
     
   }
 
@@ -81,7 +82,7 @@ const seqGUI = p => {
 
 
   p.mousePressed = function(){
-    if(p.dist(p.mouseX, p.mouseY, playButton.x, playButton.y) < playButton.w/2){
+    if(p.dist(p.mouseX, p.mouseY, playButton.x, playButton.y) < playButton.w/2 && div.style["display"] == "block"){
       if(obj.hasOwnProperty("sequence")){
         //console.log("play" + obj.sequence);
         part = playSequence(obj, instrument);

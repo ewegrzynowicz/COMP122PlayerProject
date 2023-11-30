@@ -7,9 +7,11 @@ const mGUI = p => {
   var nButtons = new Array();
   var pitchSet = null, rhythmSet = null; // needs setter
   var loop = null;
-  var name = "foo";
+  var name = "markov chain";
   var vol = 1;
   var slider;
+  var instrument; //= synthLibrary[0].synth;
+  var selectSynth;
   var div = document.getElementById("markov").parentNode;
 
   p.setLoop = function(obj){
@@ -20,16 +22,18 @@ const mGUI = p => {
   p.getVol = function(){
     return vol; // get the current volume for this graph
   }
+  p.getInst = function(){
+    return instrument;
+  }
 
   p.setVol = function(){
     // set volume
     //vol = slider.
   }
-  
-  p.setObj = function(obj){
+  p.setObj = function(obj, w, h){
     if(obj.hasOwnProperty("pitchSet")){
       pitchSet = obj.pitchSet;
-      p.makeNodes(pitchSet);
+      p.makeNodes(pitchSet, w, h);
     }
     if(obj.hasOwnProperty("rhythmSet")){
       rhythmSet = obj.rhythmSet;
@@ -38,8 +42,30 @@ const mGUI = p => {
       name = obj.name;
     }
   }
-  
-  p.makeNodes = function(pitchSet){
+  p.setup = function() {
+    p.createCanvas(400, 400);
+    instrument = synthLibrary[0].synth; // set to default
+    tButton = new Button(p, p.width / 2, p.height / 2, p.color(0, 200, 0), "start \n" + name);
+    slider = new Slider(p, p.width * 3 / 4, p.height * 11/12);
+
+    selectSynth = p.createSelect();
+    selectSynth.class("synthSequenceMenu");
+    selectSynth.position(10, 10);
+
+    for(let i = 0; i < synthLibrary.length; i ++){
+      selectSynth.option(synthLibrary[i].name, i);
+    }
+    selectSynth.changed(p.chooseSynth);
+
+  }
+
+  p.chooseSynth = function(){
+    instrument = synthLibrary[selectSynth.value()].synth;
+    console.log(instrument);
+  }
+
+  p.makeNodes = function(pitchSet, w, h){
+    // w and h are width and heigh of the sketch passed from markov.js after instantiating the GUI sketch
     nodes = Object.keys(pitchSet.matrix); // array of nodes
     //console.log("nodes" + nodes);
     let slice = p.TWO_PI; // distribute nodes around a circle
@@ -47,8 +73,8 @@ const mGUI = p => {
       slice = p.TWO_PI / nodes.length; // divide the circle by number of nodes
     }
     for (let i = 0; i < nodes.length; i++) {
-      let x = (p.cos(slice * i) * 150) + (p.width / 2); // find a location
-      let y = (p.sin(slice * i) * 150) + (p.height / 2);
+      let x = (p.cos(slice * i) * 150) + (w / 2); // find a location
+      let y = (p.sin(slice * i) * 150) + (h / 2);
 
       nButtons[i] = new Button(p, x, y, p.color(p.random(250), p.random(250), p.random(250)), nodes[i]);
       nButtons[i].w = 40; // node button size
@@ -56,12 +82,6 @@ const mGUI = p => {
 
     }
     
-  }
-  
-  p.setup = function() {
-    p.createCanvas(400, 400);
-    tButton = new Button(p, p.width / 2, p.height / 2, p.color(0, 200, 0), "start \n" + name);
-    slider = new Slider(p, p.width/2, p.height * 11/12)
   }
 
   p.draw = function() {
