@@ -14,7 +14,7 @@
   {
     "name" : "hi-hat",
     "pitch" : "F4",
-    "pattern" : "101100111010101010111010",
+    "pattern" : "1-11--111010101010111010",
     "synth" : "mySampler"
   },
   {

@@ -5,7 +5,7 @@ For the final stage in this project, we will define a "graph" for a Markov chain
 
 In this project, the machine won't do any learning or adapting, though that might be the next extension if we were to develop this application further. Instead, you will construct a probability table that will govern the behavior of your system. It's a form of composition in which you set the parameters and let the process determine the actual result. The player application will play a semi-random note sequence using your data file (markov.json) to choose the next note. Your file will define the probabilities of the transitions from one note to another as well as rhythmic values.
 
-##Instructions
+## Instructions
 
 1. Go to **replit** and launch your own version of **Project 4** ("start project"). It will look identical to Projects 1-3, but there are some enhancements and bug fixes that will make this phase work better.
 2. **Find the file "markov.json"** in the file list. It should have only an empty array for its contents:
