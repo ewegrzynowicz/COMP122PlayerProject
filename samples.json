@@ -1,6 +1,30 @@
 
 [
   {
+    "name" : "Fire Rain Bass (82bpm)",
+    "file" : "samples/Fire-Rain-Bass_82bpm.wav",
+    "bpm" : 82,
+    "duration" : "8m"
+  },
+  {
+    "name" : "Fire Rain Percussion (82bpm)",
+    "file" : "samples/Fire-Rain-Percussion_82bpm.wav",
+    "bpm" : 82,
+    "duration" : "8m"
+  },
+  {
+    "name" : "Fire Rain Piano (82bpm)",
+    "file" : "samples/Fire-Rain-Piano_82bpm.wav",
+    "bpm" : 82,
+    "duration" : "8m"
+  },
+  {
+    "name" : "Fire Rain Strings (82bpm)",
+    "file" : "samples/Fire-Rain-Strings_82bpm.wav",
+    "bpm" : 82,
+    "duration" : "8m"
+  },
+  {
     "name" : "fear",
     "file" : "samples/FDR_fear_itself.mp3",
     "bpm" : 120,
@@ -24,9 +48,9 @@
     "duration" : "8:0:0"
   },
     {
-    "name" : "Beat-Sir 2 (ST)",
-    "file": "samples/Beat-Sir_2-ST.wav",
-    "bpm" : 120,
+    "name" : "Apollo 01 Guitar",
+    "file": "samples/Apollo01-Guitar_75bpm_Bb.wav",
+    "bpm" : 75,
     "duration" : "2:0:0"
   }
 

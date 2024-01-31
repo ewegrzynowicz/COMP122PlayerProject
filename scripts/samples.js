@@ -167,10 +167,16 @@ function makeButtons(sObj, i, player, part){
   });
   
   let d = document.getElementById("sampler");
-  d.appendChild(b); // add play button to sampler div
-  d.appendChild(loopB); // add play button to sampler div
-  d.appendChild(rev);  // add reverse button
-  d.appendChild(document.createElement("br"));
+  let s = document.createElement("div"); // new div for each sample
+  s.id = "sample" + i;
+  s.className = "sample";
+  var sketch = new p5(sampleGUI, s);
+  sketch.setPlayer(part, i);
+  s.appendChild(document.createElement("br"));
+  s.appendChild(b); // add play button to sampler div
+  s.appendChild(loopB); // add play button to sampler div
+  s.appendChild(rev);  // add reverse button
+  d.appendChild(s);
 }
 
 //console.log("global data: " + data)
