@@ -1,6 +1,6 @@
 const sampleGUI = p => {
   var partnum, fileName;
-  var playButton, loopButton, revButton, rmsMeter;
+  var playButton, stopButton, loopButton, revButton, rmsMeter;
   var object, player, part, meter, bpm = 120;
   var ready = false, looping = false, reversed = false;
 
@@ -39,9 +39,10 @@ const sampleGUI = p => {
   p.setup = function(){
     p.createCanvas(400, 60);
     playButton = new SamplePlayButton(p, 40, p.height/2);
-    loopButton = new SampleLoopButton(p, 100, p.height/2);
-    revButton = new SampleReverseButton(p, 160, p.height/2);
-    rmsMeter = new RMS_Meter(p, p.width/2, p.height/2);
+    stopButton = new SampleStopButton(p, 100, p.height/2);
+    loopButton = new SampleLoopButton(p, 160, p.height/2);
+    revButton = new SampleReverseButton(p, 210, p.height/2);
+    rmsMeter = new RMS_Meter(p, p.width * 2/3, p.height/2);
   }
 
   p.draw = function(){
@@ -50,6 +51,7 @@ const sampleGUI = p => {
     p.textAlign(p.CENTER);
     p.text("Sample " + partnum +" (" + fileName + ")", p.width/2, 10);
     playButton.display(ready);
+    stopButton.display(ready);
     loopButton.display(looping);
     revButton.display(reversed);
     rmsMeter.display(meter.getValue());
@@ -73,10 +75,8 @@ const sampleGUI = p => {
         times[0] = Number(times[0]) + 1; // move up to the next measure;
         t = times[0] + ":" + times[1] + ":" + times[2]; 
         // console.log("sample at " + t);
-        Tone.Transport.scheduleOnce((time) => {
-          part.stop();
-          part.start();
-        }, t);
+        part.stop();
+        part.start(t);
       }
       //loop button
       if(p.dist(p.mouseX, p.mouseY, loopButton.x, loopButton.y) < 25){
@@ -87,7 +87,21 @@ const sampleGUI = p => {
           looping = true;
           part.loop = true;
         }
-
+      }
+      // reverse button
+      if(p.dist(p.mouseX, p.mouseY, revButton.x, revButton.y) < 25){
+        if(reversed){
+          reversed = false;
+          player.reverse = false;
+        } else {
+          reversed = true;
+          player.reverse = true;
+        }
+      }
+      // stop button
+      if(p.dist(p.mouseX, p.mouseY, stopButton.x, stopButton.y) < 25){
+        player.stop();
+        part.stop();
       }
       
     }
@@ -124,6 +138,36 @@ class SamplePlayButton {
     this.p.pop();
   }
 }
+
+class SampleStopButton {
+  constructor(_p, _x, _y){
+    this.p = _p;
+    this.x = _x;
+    this.y = _y;
+  }
+  display(ready){
+    this.p.push();
+    this.p.translate(this.x, this.y);
+    if(ready){
+      this.p.fill("red");
+    } else {
+      this.p.fill("gray");
+    }
+    this.p.stroke("white");
+    this.p.strokeWeight(3);
+    this.p.ellipse(0, 0, 40);
+    this.p.fill("white");
+    this.p.strokeJoin(this.p.ROUND);
+    this.p.beginShape();
+    this.p.vertex(-7, -7);
+    this.p.vertex(7, -7);
+    this.p.vertex(7, 7);
+    this.p.vertex(-7, 7);
+    this.p.endShape(this.p.CLOSE);
+    this.p.pop();
+  }
+}
+
 
 class SampleLoopButton {
   constructor(_p, _x, _y){
