@@ -1,5 +1,5 @@
 const sampleGUI = p => {
-  var partnum, fileName;
+  var partnum, fileName, title;
   var playButton, stopButton, loopButton, revButton, rmsMeter;
   var object, player, part, meter, bpm = 120;
   var ready = false, looping = false, reversed = false;
@@ -7,6 +7,9 @@ const sampleGUI = p => {
   p.setObj = function(_o, _i) {
     object = _o;
     partnum = _i;
+    if(object.hasOwnProperty("name")){
+      title = object.name;
+    }
     if(object.hasOwnProperty("file")){
       fileName = object.file;
       meter = new Tone.Meter();
@@ -32,24 +35,22 @@ const sampleGUI = p => {
         bpm = object.bpm;
       }
     }
-  
-
   }
 
   p.setup = function(){
     p.createCanvas(400, 60);
-    playButton = new SamplePlayButton(p, 40, p.height/2);
-    stopButton = new SampleStopButton(p, 100, p.height/2);
-    loopButton = new SampleLoopButton(p, 160, p.height/2);
-    revButton = new SampleReverseButton(p, 210, p.height/2);
-    rmsMeter = new RMS_Meter(p, p.width * 2/3, p.height/2);
+    rmsMeter = new RMS_Meter(p, 10, p.height - 20);
+    playButton = new SamplePlayButton(p, 150, p.height/2);
+    stopButton = new SampleStopButton(p, 210, p.height/2);
+    loopButton = new SampleLoopButton(p, 270, p.height/2);
+    revButton = new SampleReverseButton(p, 330, p.height/2);
   }
 
   p.draw = function(){
     p.background(200);
     p.fill("white");
-    p.textAlign(p.CENTER);
-    p.text("Sample " + partnum +" (" + fileName + ")", p.width/2, 10);
+    p.textAlign(p.LEFT, p.TOP);
+    p.text((partnum + 1) + ". " + title, 10, 5, 120, 40);
     playButton.display(ready);
     stopButton.display(ready);
     loopButton.display(looping);
@@ -244,21 +245,14 @@ class RMS_Meter{
   display = function(value){
     this.p.push();
     this.p.translate(this.x, this.y);
-    this.p.textAlign(this.p.LEFT);
-    let mval = value;
-    if(mval < -96){
-      mval = "-∞ ";
-    } else {
-      mval = mval.toFixed(0); // truncate
-    }
-    this.p.text(mval + " dB", 0, 25);
     let rms = this.p.map(value, -96, 0, 0, 100);
     if(rms < 0){
       rms = 0;
     }
     this.p.fill("gray");
-    this.p.rect(0, 0, 100, 10); // meter background
+    this.p.rect(0, 0, 100, 15); // meter background
     let blocks = Math.ceil(rms / 5); // 5px meter segments
+    //this.p.stroke("white");
     for(let i = 0; i < blocks; i++){
       if(i < 15){
         this.p.fill("green");
@@ -268,8 +262,18 @@ class RMS_Meter{
       else if (i >= 18) {
         this.p.fill("red");
       }
-      this.p.rect(i * 5, 0, 5, 10);
+      this.p.rect(i * 5, 0, 5, 15);
     }
+
+    let mval = value;
+    if(mval < -96){
+      mval = "-∞ ";
+    } else {
+      mval = mval.toFixed(0); // truncate
+    }
+    this.p.textAlign(this.p.LEFT, this.p.CENTER);
+    this.p.fill("white");
+    this.p.text(mval + " dB", 0, 7);
     this.p.pop();
 
   }
