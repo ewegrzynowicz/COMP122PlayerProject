@@ -10,6 +10,7 @@ const mGUI = p => {
   var name = "markov chain";
   var vol = 1;
   var slider;
+  var w = 400, h = 400;
   var instrument; //= synthLibrary[0].synth;
   var selectSynth;
   var selectLength;
@@ -38,7 +39,7 @@ const mGUI = p => {
     // set volume
     //vol = slider.
   }
-  p.setObj = function(obj, w, h){
+  p.setObj = function(obj){
     if(obj.hasOwnProperty("pitchSet")){
       pitchSet = obj.pitchSet;
       p.makeNodes(pitchSet, w, h);
@@ -51,7 +52,7 @@ const mGUI = p => {
     }
   }
   p.setup = function() {
-    p.createCanvas(400, 400);
+    p.createCanvas(w, h);
     instrument = synthLibrary[0].synth; // set to default
     tButton = new Button(p, p.width / 2, p.height / 2, p.color(0, 200, 0), "start \n" + name);
     slider = new Slider(p, p.width * 3 / 4, p.height * 11/12);

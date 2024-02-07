@@ -35,7 +35,7 @@ function makeGraph(obj) {
       mDiv.appendChild(d);
       let sketch = new p5(mGUI, d); // invoke p5
       //console.log ("sketch width: " + sketch.width);
-      sketch.setObj(obj[i], sketch.width, sketch.height); // pass an object to a sketch
+      sketch.setObj(obj[i]); // pass an object to a sketch
       //console.log("markov GUI width: " + sketch.width)
       let pitchSet = {};
       let rhythmSet = {};
