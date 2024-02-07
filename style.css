@@ -5,6 +5,11 @@
   width: 350px;
 }
 
+.sample{
+  position: relative;
+  margin: auto;
+}
+
 .synthSequenceMenu {
   height: 30px;
   width: 100px;

@@ -1,6 +1,6 @@
 /** 
-* Make a sample player interface with Tone.js
-* June 26, 2023
+* Make a sample player interface with Tone.js and P5.js
+* January 31, 2024
 */
 var samplePlayers = []; // store sample players globally
 var sampleParts = [];
@@ -35,10 +35,19 @@ async function loadSamplerData(file) {
   loadSample() takes the object read in from "samples.json" and creates an array of sample controls (play, reverse, etc)
 */
 function loadSamples(obj){
+    let samplerDiv = document.getElementById("sampler");
   if(Array.isArray(obj)){
     //console.log("obj.samples is an array");
     for(let i = 0; i < obj.length; i ++){
-      if(obj[i].hasOwnProperty("file")){
+        let sDiv = document.createElement("div");
+        sDiv.id = "sample" + i;
+        sDiv.className = "sample";
+        let sketch = new p5(sampleGUI, sDiv);
+        sketch.setObj(obj[i], i);
+        samplerDiv.appendChild(sDiv);
+
+/*
+    if(obj[i].hasOwnProperty("file")){
         let player = new Tone.GrainPlayer(obj[i].file, function(){
           //after the player has loaded:
           samplePlayers.push(player); // add player to list
@@ -54,127 +63,7 @@ function loadSamples(obj){
         }).toDestination();
       } else 
         console.log("no sample file loaded");
-
+*/
     }
   }
 }
-
-// create a button interface for each sample
-// accompany player buttons with controls for FWD/REV
-// playback is tempo sensitive if meta data includes "bpm" field
-function makeButtons(sObj, i, player, part){  
-
-  //play button
-  let b = document.createElement("button");
-  b.id = "sample_" + i;
-  b.className = "play-button";
-  b.innerHTML = sObj.name;
-  console.log("making button for " + b.id + " " + sObj.name);
-  b.addEventListener('click', () =>{
-    if(sObj.hasOwnProperty("bpm")){
-      // scale playback rate to tempo
-      //samplePlayers[i].playbackRate = Tone.Transport.bpm.value / sObj.bpm;
-      player.playbackRate = Tone.Transport.bpm.value / sObj.bpm;
-    }
-    if(Tone.Transport.state == "stopped"){
-//      startTransport();
-    }
-    let t = Tone.Transport.position;
-    let times = t.split(':');
-    times[2] = 0; // set to downbeat;
-    times[1] = 0; // set to first beat
-    times[0] = Number(times[0]) + 1; // move up to the next measure;
-    t = times[0] + ":" + times[1] + ":" + times[2]; 
-    // console.log("sample at " + t);
-    Tone.Transport.scheduleOnce((time) => {
-//      sampleParts[i].stop();
-//      sampleParts[i].start();
-      part.stop();
-      part.start();
-    }, t);
-
-///    sampleParts[i].start(t);
-    console.log("playing " + part + " at " + t);
-    console.log("loop status: " + part.loop);
-    console.log("loop state: " + part.state);
-    
-  });
-
-  /* 
-  duration property is currently linked to the player.loop property, which is limited to the length of the sample. Looking for a method to trigger samples at arbitrary intervals beyond the length of the sample
-  
-  if(sObj.hasOwnProperty("duration")){
-    if(Tone.Time(sObj.duration).toSeconds() <= player.buffer.duration){
-      player.loopEnd = sObj.duration;      
-    } else player.loopEnd = player.buffer.duration;
-  } else {
-    sObj.duration = player.buffer.duration;
-    player.loopEnd = sObj.duration;
-  }  
-  */
-  if(sObj.hasOwnProperty("duration")){
-//    sampleParts[i].loopEnd = sObj.duration;      
-    part.loopEnd = sObj.duration;      
-  } else {  
-//    sampleParts[i].loopEnd = samplePlayers[i].buffer.duration;
-//    part.loopEnd = samplePlayers[i].buffer.duration;
-    part.loopEnd = player.buffer.durration;
-  }
-  
-  
-  // loop button
-  let loopB = document.createElement("button");
-  loopB.innerHTML = "Loop";
-  loopB.className = "metro-button";
-  loopB.addEventListener('click', () => {
-/*    if(sampleParts[i].loop){
-      sampleParts[i].loop = false;
-      loopB.innerHTML = "Loop"
-    } else {  
-      loopB.innerHTML = "Looping";
-      sampleParts[i].loop = true;
-    }
-    */
-    if(part.loop){
-      part.loop = false;
-      loopB.innerHTML = "Loop"
-    } else {  
-      loopB.innerHTML = "Looping";
-      part.loop = true;
-    }
-  });
-
-  // reverse button
-  let rev = document.createElement("button");
-  rev.innerHTML = "REV";
-  rev.className = "metro-button";
-  rev.addEventListener('click', () => {
-    if(player.reverse){
-      player.reverse = false;
-      rev.innerHTML = "REV";
-    } else {
-      player.reverse = true;
-      rev.innerHTML = "FWD";
-    }
-/*    if(samplePlayers[i].reverse){
-      samplePlayers[i].reverse = false;
-      rev.innerHTML = "REV";
-    } else {
-      samplePlayers[i].reverse = true;
-      rev.innerHTML = "FWD";
-    }
-    */
-  });
-  
-  let d = document.getElementById("sampler");
-  d.appendChild(b); // add play button to sampler div
-  d.appendChild(loopB); // add play button to sampler div
-  d.appendChild(rev);  // add reverse button
-  d.appendChild(document.createElement("br"));
-}
-
-//console.log("global data: " + data)
-
-//import data from "./samples.json" assert { type: "json" };
-//var str = JSON.parse(data);
-//console.log(data);

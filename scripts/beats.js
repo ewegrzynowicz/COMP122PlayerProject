@@ -23,7 +23,10 @@ async function loadBeatData(file) {
 function makeBeats(obj){
   //master control section
   let beatsDiv = document.getElementById("beats");
-  let bSketch = new p5(beatsGUI, beatsDiv);
+  let b = document.createElement("div");
+  let bSketch = new p5(beatsGUI, b);
+  b.appendChild(document.createElement("br"));
+  beatsDiv.appendChild(b);
   let beatSketches = [];
 
   //individual parts
