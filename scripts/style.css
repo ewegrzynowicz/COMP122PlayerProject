@@ -139,7 +139,8 @@
 .contents {
   background-color: #eeeeee;
   text-align: center;
-
+  width: 80%;
+  margin: auto;
 }
 
 .menu {
