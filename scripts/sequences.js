@@ -2,7 +2,7 @@
 * Make a sequence player interface with Tone.js and P5.js
 * July 16, 2023
 */
-let sequencePromise = loadSequenceData("sequences.json")
+let sequencePromise = loadSequenceData("JSON/sequences.json")
 
 // read in the JSON file with sampler meta-data
 async function loadSequenceData(file) {

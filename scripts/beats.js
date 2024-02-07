@@ -1,5 +1,5 @@
 var beatLoops = [];
-let beatPromise = loadBeatData("beats.json");
+let beatPromise = loadBeatData("JSON/beats.json");
 
 
 // read in the JSON file with sampler meta-data
@@ -23,10 +23,7 @@ async function loadBeatData(file) {
 function makeBeats(obj){
   //master control section
   let beatsDiv = document.getElementById("beats");
-  let b = document.createElement("div");
-  let bSketch = new p5(beatsGUI, b);
-  b.appendChild(document.createElement("br"));
-  beatsDiv.appendChild(b);
+  let bSketch = new p5(beatsGUI, beatsDiv);
   let beatSketches = [];
 
   //individual parts
@@ -34,7 +31,9 @@ function makeBeats(obj){
     for(let i = 0; i < obj.length; i++){
       console.log(obj[i].name);
       let beatPartDiv = document.getElementById("beatParts");
-      let pSketch = new p5(beatPartGUI, beatPartDiv); // invoke p5 and add it to the div
+      let b = document.createElement("div");
+      let pSketch = new p5(beatPartGUI, b); // invoke p5 and add it to the div
+      beatPartDiv.appendChild(b);
       let loop = pSketch.setObj(obj[i]); // hand a reference to the sequence to the sketch, get a Tone.loop in return
       beatLoops.push(loop); // add loop to global array
       loop.stop();

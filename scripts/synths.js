@@ -2,7 +2,7 @@
 * Make a synth library interface with Tone.js and P5.js
 * August 2, 2023
 */
-let synthPromise = loadSynthData("synths.json");
+let synthPromise = loadSynthData("JSON/synths.json");
 
 //Global array of synths
 var synthLibrary = [
