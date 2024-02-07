@@ -1,3 +1,7 @@
+body {
+  max-width: 500px;
+}
+
 .seqPlayer{
   position: relative;
   margin: 0 auto;
