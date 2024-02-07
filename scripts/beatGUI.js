@@ -24,9 +24,9 @@ const beatPartGUI = p => {
           plays = true;
         } else plays = false;
         if (obj.pattern.length > 16) {
-          w = 300 / obj.pattern.length;
+          w = 240 / obj.pattern.length;
         } else w = 15;
-        cells.push(new Cell(p, 50 + i * w, p.height / 4, w));
+        cells.push(new Cell(p, 40 + i * w, 13, w));
         cells[i].w = w; // adjust as necessary
         cells[i].plays = plays;
       }
@@ -57,7 +57,7 @@ const beatPartGUI = p => {
     p.fill(0);
     p.textAlign(p.LEFT, p.TOP);
     p.textSize(10);
-    p.text(obj.name, 10, 2);
+    p.text(obj.name + " (" + obj.pattern.length + ")", 5, 2);
     for (let i = 0; i < cells.length; i++) {
       cells[i].display(); // draw all the cells
     }
@@ -230,11 +230,11 @@ class Cell {
   /** 
   individual cell in a beat pattern interface
   */
-  constructor(_p, _x, _y) {
+  constructor(_p, _x, _y, _w) {
     this.p = _p; // p5 instance
     this.x = _x;
     this.y = _y;
-    this.w = 20; // width (default)
+    this.w = _w; // width (default)
     this.h = 20; // height
     this.plays = false; // cell plays a note (default false)
     this.on = false; // is this cell the focus on this 16th note?
@@ -255,6 +255,8 @@ class Cell {
     this.p.push();
     this.p.translate(this.x, this.y);
     this.p.rect(0, 0, this.w, this.h, 2);
+    this.p.fill(0);
+    //this.p.text(Math.trunc(this.w), 0, 0);
     this.p.pop();
 
   }
