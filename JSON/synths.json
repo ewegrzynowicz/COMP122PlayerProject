@@ -1,1 +1,57 @@
-[ ]
+[
+  {
+    "name": "yippee",
+    "type": "Synth",
+    "settings": {
+      "detune": "1",
+      "portamento": "0.5",
+      "volume": "-14",
+      "oscillator": {
+        "type": "custom",
+        "phase": 0,
+        "partialCount": "3",
+        "partials": [
+          "0.31",
+          "0.49",
+          "0.37"
+        ]
+      },
+      "envelope": {
+        "attack": "2",
+        "attackCurve": "exponential",
+        "decay": "0.1",
+        "decayCurve": "linear",
+        "sustain": "1",
+        "release": "2.5",
+        "releaseCurve": "bounce"
+      }
+    }
+  },
+  {
+    "name": "sad robots",
+    "type": "Synth",
+    "settings": {
+      "detune": "-2",
+      "portamento": "0.5",
+      "volume": "-20",
+      "oscillator": {
+        "type": "custom",
+        "phase": 0,
+        "partialCount": "2",
+        "partials": [
+          "0.54",
+          "1"
+        ]
+      },
+      "envelope": {
+        "attack": "0",
+        "attackCurve": "exponential",
+        "decay": "1",
+        "decayCurve": "exponential",
+        "sustain": "1",
+        "release": "2",
+        "releaseCurve": "cosine"
+      }
+    }
+  }
+]
